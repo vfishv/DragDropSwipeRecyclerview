@@ -17,11 +17,12 @@ The creation (and maintenance) of this library requires time and effort. If you 
 
 ## How to use it
 ### 1. Reference the library
-Add the library to your project via Gradle:
+Add the library to your project via `mavenCentral` by adding the following in the app's `build.gradle` file:
 
 ```
 dependencies {
-    implementation 'com.ernestoyaquello.dragdropswiperecyclerview:drag-drop-swipe-recyclerview:0.6.0'
+    ...
+    implementation 'com.ernestoyaquello.dragdropswiperecyclerview:drag-drop-swipe-recyclerview:1.0.2'
 }
 ```
 
@@ -222,6 +223,15 @@ mList.scrollListener = onListScrollListener
 ```
 
 **And that's it**! Your list with support for *swipe* and *drag & drop* should be fully working now.
+
+## Updating the items
+### Without implementing `DiffUtil`
+The simplest way to update the items of your list is by setting the new list of items in the property `dataSet` of the adapter. This setter will take care of notifying the recyclerview about the changes, so all you need to do is set it.
+
+On the other hand, in case you want to apply small updates to the collection of items instead of replacing it entirely at once, please take a look at the convenience methods that the adapter offers, such as `addItem()`, `inserItem()`, `removeItem()`, and `moveItem()`. These methods will take care of notifying the recyclerview about the specific changes that have been applied to the data set, which will result in the correct animations being run.
+
+### Implementing `DiffUtil`
+In case you want to use `DiffUtil` to be able to replace the entire list of items while ensuring that the the correct animations are always run, please extend the class `DragDropSwipeDiffCallback`. Then, override the method `createDiffUtil()` of the adapter and make it return an instance of your implementation.
 
 ## Customization
 ### DragDropSwipeRecyclerView customization
